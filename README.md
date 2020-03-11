@@ -6,7 +6,6 @@ The purpose of this project is trying to use deep learning to repair JPEG compre
 * 建立模型 (Building model) - Model
 * 訓練模型 (Training model) - Training
 
-
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
 
@@ -68,7 +67,7 @@ The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggl
 In fact, the best way for the first step is to split the original image into multiple small images and feed them into the training together, but the total training will take a long time, so the results presented here are not so tricky, try yourself if you are have any interest ~~
 
 
-## 建立模型 (Building model)
+## 建立模型 (Building model)：
 **Conv Unit**:
 
 Contains a convolutions layer with 3x3 kernel size followed by an 1x1 convolutions layer and a PReLU then followed by another 3x3 a convolutions layer and a PReLU.
@@ -84,27 +83,109 @@ Conv Unit EX:
   nn.PReLU()
 ```
 
-**完整架構圖 (Full Architecture)**:
+**完整架構 (Full Architecture)**:
+```
+self.base = nn.Sequential(
+  nn.Conv2d(3, 128, kernel_size=3, padding=1),
+  nn.Conv2d(128, 128, kernel_size=1),
+  nn.PReLU(),
+
+  nn.Conv2d(128, 128, kernel_size=3, padding=1),
+  nn.PReLU(),
+
+  nn.Conv2d(128, 64, kernel_size=3, padding=1),
+  nn.Conv2d(64, 64, kernel_size=1),
+  nn.PReLU(),
+
+  nn.Conv2d(64, 64, kernel_size=3, padding=1),
+  nn.PReLU(),
+
+  nn.Conv2d(64, 32, kernel_size=3, padding=1),
+  nn.Conv2d(32, 32, kernel_size=1),
+  nn.PReLU(),
+
+  nn.Conv2d(32, 32, kernel_size=3, padding=1),
+  nn.PReLU(),
+
+  nn.Conv2d(32, 16, kernel_size=1),
+  nn.PReLU()
+)
+self.last = nn.Conv2d(16, 3, kernel_size=5, padding=2)
+
+self._initialize_weights()
+```
+
+架構圖
 
 ![](/Result/Model.png)
 
-## 訓練模型 (Building model)
+## 訓練模型 (Training model)
+**步驟 (Steps)**:
+1. 初始化參數 (Initialize hyper parameters)
+```
+batch_size = 8
+threads = 4
+lr = 5e-4
+num_epochs = 100
+patch_size = 128
+jpeg_quality = 10
+```
+2. 讀取模型並初始化優化器(Loading model and initialize optimizer)
+```
+model = My_Model()
+
+model = model.to(device)
+criterion = nn.MSELoss(reduction='sum')
+
+optimizer = optim.Adam([
+    {'params': model.base.parameters()},
+    {'params': model.last.parameters(), 'lr': lr * 0.5},
+], lr=lr)
+```
+3. 初始化 DataLoader (Initialize dataloader)
+```
+dataset = Dataset(images_dir, patch_size, jpeg_quality, use_augmentation, use_fast_loader)
+dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True,
+                        num_workers=threads, pin_memory=True,drop_last=True)
+```
+
+4. 正式開訓練 (Start training!)
+```
+for epoch in range(num_epochs):
+    epoch_losses = AverageMeter()
+    target_losses = AverageMeter()
+
+    with tqdm(total=(len(dataset) - len(dataset) % batch_size)) as _tqdm:
+        _tqdm.set_description('epoch: {}/{}'.format(epoch + 1, num_epochs))
+        for data in dataloader:
+            inputs, labels = data
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            preds = model(inputs)
+
+            loss = criterion(preds, labels)
+            target = criterion(inputs, labels)
+
+            epoch_losses.update(loss.item(), len(inputs))
+            target_losses.update(target.item(), len(inputs))
 
 
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-### Loss Function
-The mean-square error (MSE) is commonly used to compare image compression quality. We use MSE as our comparison standard and as our loss function, the formula is defined as:
-MSE=1/WH sum(*xi*-*xi**)^2
+            _tqdm.set_postfix(loss='{:.6f}, target{:.6f}'.format(epoch_losses.avg, target_losses.avg))
+            _tqdm.update(len(inputs))
+```
 
-Where *xi* and *x*i* are the values of the i-th pixel in *X* and *X**, *W* and *H* are the width and height of *X*. *X* denotes the original image and *X** denotes the restored image. 
-
-## Result
+## 結果 (Result):
 ![](/Result/1.png)
 ![](/Result/7.png)
 ![](/Result/4.png)
 ![](/Result/6.png)
 
-## Reference
+## Reference:
 1. [Compression Artifacts Reduction by a deep Convolutional Network](https://arxiv.org/abs/1504.06993)
 2. [Deep Convolution Networks for Compression Artifacts Reduction](https://www.researchgate.net/publication/306185963_Deep_Convolution_Networks_for_Compression_Artifacts_Reduction)
 3. [Near-lossless *l*`∞-constrained Image Decompression
