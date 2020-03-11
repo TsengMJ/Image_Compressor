@@ -1,16 +1,15 @@
-# Image Compressor
-這個專案目的是嘗試使用深度學習修復經過 JPEG 壓縮後的影像，實做框架使用 pytorch 進行訓練。其中程式主要分為3個部份
-* 資料讀取 - DataLoader
-* 建立模型 - Model
-* 訓練 - Training
+# Image Restorer
+這個專案目的是嘗試使用深度學習修復經過 JPEG 壓縮後的影像，實做框架使用 pytorch 進行訓練。其中程式主要分為3個部份。
 
 The purpose of this project is trying to use deep learning to repair JPEG compressed images, the using framework is pytorch. The whole process is mainly divided into 3 parts. 
-* Loading data - DataLoader
-* Building model - Model
-* Training model - Training
+* 資料讀取 (Loading data) - DataLoader
+* 建立模型 (Building model) - Model
+* 訓練模型 (Training model) - Training
+
 
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
+
 這次 **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)** **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)** 作為訓練資料，其中訓練影像將近10萬張，包含多種情況，並且測試資料大約為1萬張2k圖像。
 
 The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)**, **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)**. The training data is near 100 thousand images,contain lots of kinds of situations, and the size of testing date is about 10 thousand 2k images. 
@@ -70,35 +69,34 @@ In fact, the best way for the first step is to split the original image into mul
 
 
 ## 建立模型 (Building model)
+**Conv Unit**:
 
+Contains a convolutions layer with 3x3 kernel size followed by an 1x1 convolutions layer and a PReLU then followed by another 3x3 a convolutions layer and a PReLU.
 
+```
+Conv Unit EX:
 
-下列是
+  nn.Conv2d(3, 128, kernel_size=3, padding=1)
+  nn.Conv2d(128, 128, kernel_size=1)
+  nn.PReLU()
 
-## Introduction
-  Recent years has seen an increased amount of research in image compression. Most of effort, however, has focused on how to use convolution neural network (CNN) to enhance image compression. One of them effort to use neural network to decrease the artifact of lossy image compression.  
-  
-  Ringing and blocking effect are two common, important, and unavoidable artifact of lossy image compression . Even though there are complex deblocking filters in recently compression techniques, for example H.264, there isn’t similar deblocking approach in wide used JPEG
-  
-  We will propose a convolution neural network which input is a decompressed image and output is a restored image to suppress ringing and blocking effect  and also have a satisfying performance.
+  nn.Conv2d(128, 128, kernel_size=3, padding=1)
+  nn.PReLU()
+```
 
-## Network Architecture
-Conv Unit which contains a convolutions layer with 3x3 kernel size followed by an 1x1 convolutions layer and a PReLU then followed by another 3x3 a convolutions layer and a PReLU. 
-
-After three sequential Conv Unit, connect a 1x1 convolutions layer, 5x5 convolutions layer, and a PReLU.
+**完整架構圖 (Full Architecture)**:
 
 ![](/Result/Model.png)
+
+## 訓練模型 (Building model)
+
+
 
 ### Loss Function
 The mean-square error (MSE) is commonly used to compare image compression quality. We use MSE as our comparison standard and as our loss function, the formula is defined as:
 MSE=1/WH sum(*xi*-*xi**)^2
 
 Where *xi* and *x*i* are the values of the i-th pixel in *X* and *X**, *W* and *H* are the width and height of *X*. *X* denotes the original image and *X** denotes the restored image. 
-
-## Dataset
-The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)**, **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)**. The training data is more than 10 million,contain lots of kinds of situations, and the size of validation date is about 10 thousand 2k images. 
-
-At the training phase we also augmented the images with rotation and resizing for trying to make the training more comprehensive.
 
 ## Result
 ![](/Result/1.png)
