@@ -16,7 +16,7 @@ After three sequential Conv Unit, connect a 1x1 convolutions layer, 5x5 convolut
 
 ### Loss Function
 The mean-square error (MSE) is commonly used to compare image compression quality. We use MSE as our comparison standard and as our loss function, the formula is defined as:
-MSE=1WHi(xi-xi)
+MSE=1/WH sum(*xi*-*xi**)^2
 
 Where *xi* and *x*i* are the values of the i-th pixel in *X* and *X**, *W* and *H* are the width and height of *X*. *X* denotes the original image and *X** denotes the restored image. 
 
@@ -30,4 +30,10 @@ At the training phase we also augmented the images with rotation and resizing fo
 ![](/Result/7.png)
 ![](/Result/4.png)
 ![](/Result/6.png)
+
+## Reference
+1. [Compression Artifacts Reduction by a deep Convolutional Network](https://arxiv.org/abs/1504.06993)
+2. [Deep Convolution Networks for Compression Artifacts Reduction](https://www.researchgate.net/publication/306185963_Deep_Convolution_Networks_for_Compression_Artifacts_Reduction)
+3. [Near-lossless *l*`∞-constrained Image Decompression
+via Deep Neural Network](https://arxiv.org/pdf/1801.07987.pdf)
 
