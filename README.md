@@ -18,10 +18,6 @@ After three sequential Conv Unit, connect a 1x1 convolutions layer, 5 x 5 convol
 The mean-square error (MSE) is commonly used to compare image compression quality. We use MSE as our comparison standard and as our loss function, the formula is defined as:
 MSE=1WHi(xi-xi)
 
-$N(b,d)=(b-1)M$
-
-
-
 Where xi and xi are the values of the i-th pixel in X and X, W and H are the width and height of X. X denotes the original image and X denotes the restored image. 
 
 ### Dataset
@@ -33,3 +29,5 @@ At the training phase we also augmented the images with rotation and resizing fo
 ![](/Result/1.png)
 ![](/Result/7.png)
 ![](/Result/4.png)
+![](/Result/6.png)
+
