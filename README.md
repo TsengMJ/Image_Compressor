@@ -7,7 +7,7 @@
   
   Ringing and blocking effect are two common, important, and unavoidable artifact of lossy image compression . Even though there are complex deblocking filters in recently compression techniques, for example H.264, there isn’t similar deblocking approach in wide used JPEG
   
-  In this report, we will propose a convolution neural network which input is a decompressed image and output is a restored image to suppress ringing and blocking effect  and also have a satisfying performance.
+  We will propose a convolution neural network which input is a decompressed image and output is a restored image to suppress ringing and blocking effect  and also have a satisfying performance.
 
 ## Network Architecture
 Conv Unit which contains a convolutions layer with 3 x 3 kernel size followed by an 1x1 convolutions layer and a PReLU then followed by another 3 x 3 a convolutions layer and a PReLU. 
