@@ -179,11 +179,22 @@ for epoch in range(num_epochs):
             _tqdm.update(len(inputs))
 ```
 
+**[Note]**
+
+這邊訓練沒有用驗證資料是因為篤定資料量夠大且變化多種，所以比較不會過度擬合，但訓練時最好還是乖乖用 Validation data 追蹤訓練過程～
+
+The validation data is not used for training here because it is determined that the amount of data is large enough and diverse, so it is less likely to overfit, but it is best to use it well during training.
+
 ## 結果 (Result):
+
 ![](/Result/1.png)
 ![](/Result/7.png)
 ![](/Result/4.png)
-![](/Result/6.png)
+
+失敗範例 (Faliure example)
+
+![](/Result/5.png)
+
 
 ## Reference:
 1. [Compression Artifacts Reduction by a deep Convolutional Network](https://arxiv.org/abs/1504.06993)
