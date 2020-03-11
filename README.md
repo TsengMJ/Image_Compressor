@@ -179,7 +179,7 @@ for epoch in range(num_epochs):
             _tqdm.update(len(inputs))
 ```
 
-**[Note]**
+**[Note]**:
 
 這邊訓練沒有用驗證資料是因為篤定資料量夠大且變化多種，所以比較不會過度擬合，但訓練時最好還是乖乖用 Validation data 追蹤訓練過程～
 
