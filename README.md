@@ -1,9 +1,5 @@
 # Image Compressor
 
-## [待補]： 數學式要用md語法/ 結果圖/ 架構圖/ 優化程式
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 ## Introduction
   Recent years has seen an increased amount of research in image compression. Most of effort, however, has focused on how to use convolution neural network (CNN) to enhance image compression. One of them effort to use neural network to decrease the artifact of lossy image compression.  
   
