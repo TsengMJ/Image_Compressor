@@ -26,4 +26,6 @@ The training dataset we used are **Open Images 2019 (Google)**, **BSR**, and **D
 At the training phase we also augmented the images with rotation and resizing for trying to make the training more comprehensive.
 
 ### Result
-
+![](/Result/1.png)
+![](/Result/7.png)
+![](/Result/4.png)
