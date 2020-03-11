@@ -1,13 +1,13 @@
 # Image Compressor
 這個專案目的是嘗試使用深度學習修復經過 JPEG 壓縮後的影像，實做框架使用 pytorch 進行訓練。其中程式主要分為3個部份
-* 資料讀取 - DataLoader ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/DataLoader.ipynb))
-* 建立模型 - Model ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/Model.ipynb))
-* 訓練 - Training ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/Training.ipynb))
+* 資料讀取 - DataLoader
+* 建立模型 - Model
+* 訓練 - Training
 
 The purpose of this project is trying to use deep learning to repair JPEG compressed images, the using framework is pytorch. The whole process is mainly divided into 3 parts. 
-* Loading data - DataLoader ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/DataLoader.ipynb))
-* Building model - Model ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/Model.ipynb))
-* Training model - Training ([code](https://github.com/TsengMJ/Image_Compressor/blob/master/Src/Training.ipynb))
+* Loading data - DataLoader
+* Building model - Model
+* Training model - Training
 
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
@@ -67,6 +67,9 @@ The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggl
 其實第一步最好方式，是將原本影像拆解成多張小影像都丟進去一起訓練，但是總訓練會變很久，所以這邊呈現結果就不那樣弄，有興趣自己試試看吧～～
 
 In fact, the best way for the first step is to split the original image into multiple small images and feed them into the training together, but the total training will take a long time, so the results presented here are not so tricky, try yourself if you are have any interest ~~
+
+
+## 建立模型 (Building model)
 
 
 
