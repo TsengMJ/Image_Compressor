@@ -9,7 +9,7 @@ The purpose of this project is trying to use deep learning to repair JPEG compre
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
 
-這次 **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)** **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)** 作為訓練資料，其中訓練影像將近10萬張，包含多種情況，並且測試資料大約為1萬張2k圖像。
+這次 **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)** **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**  **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)** 作為訓練資料，其中訓練影像將近10萬張，包含多種情況，並且測試資料大約為1萬張2k圖像。
 
 The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)**, **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)**. The training data is near 100 thousand images,contain lots of kinds of situations, and the size of testing date is about 10 thousand 2k images. 
 
@@ -192,6 +192,7 @@ The validation data is not used for training here because it is determined that 
 ![](/Result/4.png)
 
 失敗範例 (Faliure example)
+
 
 ![](/Result/5.png)
 
