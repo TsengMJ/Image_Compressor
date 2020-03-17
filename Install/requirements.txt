@@ -1,0 +1,8 @@
+tensorflow
+awscli
+kaggle
+pillow
+glob3
+numpy
+torch
+tqdm
