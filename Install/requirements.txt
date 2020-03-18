@@ -1,4 +1,6 @@
+tensorboardX
 tensorflow
+argparse
 awscli
 kaggle
 pillow
