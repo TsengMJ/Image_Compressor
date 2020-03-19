@@ -7,18 +7,19 @@ The purpose of this project is trying to use deep learning to repair JPEG compre
 * 訓練模型 (Training model) - Training
 
 ## 如何使用 (How to use?)
-**下載專案 (Download project)**
+### 下載專案 (Download project)
 ```
 git clone https://github.com/TsengMJ/Image_Restorer.git
 ```
 
-**安裝所需套件 (Install required packages)**
+### 安裝所需套件 (Install required packages)
 ```
 cd Image_Restorer
 bash ./Install/install.sh
 ```
 
-**下載影像資料集 (Download dataset)**
+### 下載影像資料集 (Download dataset)
+
 Open Images 檔案接近 600G 慎重下載（Warning: Open Images dataset is nearly 600G）
 ```
 bash ./Install/download_open_images.sh
@@ -26,7 +27,7 @@ bash ./Install/download_bsr_images.sh
 bash ./Install/download_div2k_images.sh
 ```
 
-**訓練 (Training)**
+### 訓練 (Training)
 ```
 python ./Src/Training.py -tp [Path/To/Training/Folder] -vp [Path/To/Validiation/Folder]
 ```
@@ -42,6 +43,7 @@ python ./Src/Training.py -tp [Path/To/Training/Folder] -vp [Path/To/Validiation/
 -sp: Rescale percent of learning rate
 
 在訓練過程中，可以使用 Tensorboard 觀察訓練狀況
+
 Use Tensorboard to watch training process ~
 ```
 tensorboard --logdir=[Path/To/Log/Folder]
@@ -49,7 +51,13 @@ tensorboard --logdir=[Path/To/Log/Folder]
 **Ex:**
 ![](/Result/Tensorboard.png)
 
+### 測試訓練結果 (Testing for training result)
+```
+python ./Src/Testing.py -mp [Path/To/Trained/Model] -ip [Path/To/Image]
+```
 
+
+---
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
 
