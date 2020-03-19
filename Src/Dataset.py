@@ -1,15 +1,16 @@
-import os
+import PIL.Image as pil_image
+import tensorflow as tf
+import numpy as np
 import random
 import glob
 import io
-import numpy as np
-import PIL.Image as pil_image
-import tensorflow as tf
+import os
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
-tf.enable_eager_execution(config=config)
+tf.compat.v1.enable_eager_execution(config=config)
 
 ## Dataset -> called by Dataloader
 class Dataset(object):

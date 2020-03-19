@@ -33,7 +33,6 @@ class My_Model(nn.Module):
     def _initialize_weights(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                print(12)
                 nn.init.normal_(m.weight, std=0.001)
 
     def forward(self, x):
