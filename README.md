@@ -61,7 +61,7 @@ python ./Src/Testing.py -mp [Path/To/Trained/Model] -ip [Path/To/Image]
 ## 資料讀取 (Loading Data)
 **資料集 (Dataset)**
 
-這次 **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)** **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**  **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)** 作為訓練資料，其中訓練影像將近10萬張，包含多種情況，並且測試資料大約為1萬張2k圖像。
+這次 **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)**, **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**,  **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)** 作為訓練資料，其中訓練影像將近10萬張，包含多種情況，並且測試資料大約為1萬張2k圖像。
 
 The training dataset we used are **[Open Images 2019 (Google)](https://www.kaggle.com/c/open-images-2019-object-detection)**, **[BSR](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)**, and **[DIV2k](https://data.vision.ee.ethz.ch/cvl/DIV2K/)**. The training data is near 100 thousand images,contain lots of kinds of situations, and the size of testing date is about 10 thousand 2k images. 
 
@@ -137,34 +137,49 @@ Conv Unit EX:
 
 **完整架構 (Full Architecture)**:
 ```
-self.base = nn.Sequential(
-  nn.Conv2d(3, 128, kernel_size=3, padding=1),
-  nn.Conv2d(128, 128, kernel_size=1),
-  nn.PReLU(),
+class ConvUnit(nn.Module):
+    def __init__(self, input_size, output_size, kernel_size, padding):
+        super(ConvUnit, self).__init__()
+        self.conv1 = nn.Conv2d(input_size, output_size, kernel_size=kernel_size, padding=padding)
+        self.conv2 = nn.Conv2d(output_size, output_size, kernel_size=kernel_size, padding=padding)
+        self.conv3 = nn.Conv2d(output_size, output_size, kernel_size=kernel_size, padding=padding)
+        self.prelu  = nn.PReLU()
+        
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.prelu(x)
+        x = self.conv3(x)
+        x = self.prelu(x)
+        
+        return x
 
-  nn.Conv2d(128, 128, kernel_size=3, padding=1),
-  nn.PReLU(),
 
-  nn.Conv2d(128, 64, kernel_size=3, padding=1),
-  nn.Conv2d(64, 64, kernel_size=1),
-  nn.PReLU(),
+class My_Model(nn.Module):
+    def __init__(self):
+        super(My_Model, self).__init__()
+        self.convUnit1 = ConvUnit(input_size=3, output_size=128, kernel_size=3, padding=1)
+        self.convUnit2 = ConvUnit(input_size=128, output_size=64, kernel_size=3, padding=1)
+        self.convUnit3 = ConvUnit(input_size=64, output_size=32, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(32, 16, kernel_size=1)
+        self.conv2 = nn.Conv2d(16, 3, kernel_size=5, padding=2)
+        self.prelu  = nn.PReLU()
 
-  nn.Conv2d(64, 64, kernel_size=3, padding=1),
-  nn.PReLU(),
+        self._initialize_weights()
 
-  nn.Conv2d(64, 32, kernel_size=3, padding=1),
-  nn.Conv2d(32, 32, kernel_size=1),
-  nn.PReLU(),
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.normal_(m.weight, std=0.001)
 
-  nn.Conv2d(32, 32, kernel_size=3, padding=1),
-  nn.PReLU(),
-
-  nn.Conv2d(32, 16, kernel_size=1),
-  nn.PReLU()
-)
-self.last = nn.Conv2d(16, 3, kernel_size=5, padding=2)
-
-self._initialize_weights()
+    def forward(self, x):
+        x = self.convUnit1(x)
+        x = self.convUnit2(x)
+        x = self.convUnit3(x)
+        x = self.conv1(x)
+        x = self.prelu(x)
+        x = self.conv2(x)
+        return x
 ```
 
 架構圖
